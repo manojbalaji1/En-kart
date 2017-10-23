@@ -1,0 +1,126 @@
+{%  extends "base.html" %}
+
+<style>
+    .container-alert-flash{
+        position: absolute;
+        top: 10px;
+        z-index: 50000;
+        width: 100%;
+        right: 0;
+        margin: 0;
+    }
+</style>
+
+<script>
+
+        {% block jquery %}
+            function setPrice() {
+                var price= $(".variation_select option:selected").attr("data-price");
+                var sale_price =$(".variation_select option:selected").attr("data-sale-price")
+                console.log(sale_price);
+                if (sale_price!="" && sale_price!=null && sale_price!="None"){
+                    $("#price").html("<h3>" + sale_price + " <small class='og-price' style='color: red; text-decoration:line-through;'>" + price + "</small></h3>");
+                }else{
+                  $("#price").html(sale_price);
+                }
+            }
+            setPrice()
+            
+            
+            $(".variation_select").change(function () {
+                setPrice();
+                updateCartItem();
+            })
+
+
+            $("#submit-btn").click(function(event) {
+                event.preventDefault()
+                var formData = $("#add-form").serialize();
+                console.log(formData);
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'cart' %}",
+                    data: formData,
+                    success: function (data) {
+                        console.log(data)
+                        updateCartItem()
+{#                        var template = "{% include 'alert.html' %}";#}
+{#                        console.log(template);#}
+{#                        $("body").append(template);#}
+                    },
+                    error: function(response, error){
+{#                        console.log(response)#}
+{#                        console.log(error)#}
+                        $("#add-form").submit();
+                    }
+                })
+
+            })
+        {% endblock %}
+</script>
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>{{ object.product_name }}</h2>
+
+            {% if object.get_image_url %}
+                <div>
+
+                    <img src="{{ object.get_image_url }}" class="img-rounded img-responsive">
+
+                </div>
+            {% endif %}
+
+            <p class="lead">
+                {{ object.product_description }}
+            </p>
+        </div>
+        <!--Product sidebar-->
+        <div class="col-sm-4">
+            <form id="add-form" method="GET" action="{%  url 'cart' %}">
+                {% if object.variation_set.count > 1 %}
+                    <h3 id="price">{{ object.variation_set.first.unit_price }}</h3>
+
+                    <select name='item' class="form-control variation_select">
+                        {% for variation in object.variation_set.all %}
+                            <option data-price="{{ variation.unit_price }}" data-sale-price="{{ variation.sale_price }}" value="{{ variation.id }}"><h2>{{ variation}}</h2></option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <input type="hidden" name="item" value="{{ object.variation_set.first.id }}">
+                    <h3 id="price" >{% if object.variation_set.first.sale_price %}
+                        {{ object.variation_set.first.sale_price }}
+                        <small class="og-price" style='color: red; text-decoration:line-through;'>{{ object.variation_set.first.unit_price }}</small>
+                    {% else %}
+                        {{ object.variation_set.first.unit_price }}
+                    {% endif %}
+                    </h3>
+                {% endif %}
+                <br/>
+                <input class="form-control" type="number" name="qty" value="1"1>
+                <br>
+                <input  id="submit-btn" type="submit" value="Add to Cart" class="btn btn-default"/>
+            </form>
+            <br/>
+            <hr/>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute.uri }}">
+                <i class="fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+            </a>
+            <a href="https://twitter.com/home?status=I'm%20going%20to%20learn%20to%20Code...%20Come%20build%20an%20web%20apsp%20with%20me!%20%23CFE%20and%20@justinmitchel%20{{ request.build_absolute.uri }}">
+                <i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i>
+            </a>
+            <br />
+            <hr />
+
+            <h4>Related Products</h4>
+            <div class="row">
+                {% for product in related %}
+                    <div class="col-xs-6">
+                         {% include "myshop/product_template.html" with product=product price="True" %}
+                    </div>
+                    {% cycle '' '</div><div class="row">' %}
+                {%  endfor %}
+            </div>
+{% endblock %}

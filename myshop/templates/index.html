@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+.jumbotron {
+	background-color:#5ACDFF;
+    margin-right: -15px;
+    margin-left: -15px;
+	color: #000;
+	{% if featured_image.make_image_background %}
+	background-image: url("{{ featured_image.image.url }}");
+	background-repeat: no-repeat;
+	background-color: #000;
+	background-size: cover;
+	background-position-y: -300px;
+        height: 300px;
+	{% endif %}
+}
+</style>
+{% if featured_image %}
+    <div class="jumbotron" style="margin-top: -20px;">
+
+            <div class="row">
+                <div class='col-sm-12 {% if featured_image.text_right %} pull-left {% endif %}'>
+                    <h1>{{ featured_image.product.product_name }}</h1>
+                    <p>{{ featured_image.product.product_description }}</p>
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="{{ featured_image.product.get_absolute_url }}" role="button">More Details </a>
+                    </p>
+                </div>
+                {% if not featured_image.make_image_background %}
+                    <div class='col-sm-6' >
+                        <img src="{{ featured_image.image.url }}" class='img-responsive' />
+                    </div>
+                {% endif %}
+            </div>
+
+    </div>
+{% endif %}
+    <div class="row">
+    <h1>Recommended Products</h1>
+    {% include "products.html" with object_list=products col_class_set="col-sm-2" %}
+    </div>
+    <div class="row">
+    <h1>Recommended Products</h1>
+    {% include "products.html" with object_list=products2 col_class_set="col-sm-3" %}
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<script>
+
+    function updateCartItem() {
+         var badge = $("#cart-count-badge");
+        $.ajax({
+            type: "GET",
+            url: "{% url 'item_count' %}",
+            success: function (data) {
+                badge.text(data.count)
+                console.log(data.count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+            })
+
+    }
+    $(document).ready(function () {
+
+       updateCartItem();
+    })
+</script>

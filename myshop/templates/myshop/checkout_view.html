@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+
+{% if not user_auth%}
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ login_form }}
+        <input type="hidden" name="next" value="{{ next_url }}"/>
+        <input type="submit" class="btn btn-default"/>
+    </form>
+{% else %}
+<table class="table">
+    {% for item in cart.cartitem_set.all %}
+        <tr>
+        <td>{{ item.item.get_title }}</td>
+        <td class="text-left">{{ item.quantity }}</td>
+        <td class="text-right">{{ item.line_item_total }}</td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td colspan="4" class="text-right">Subtotal: <span id="subtotal">{{ object.subtotal }}</span></td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right">Tax(Estimated): <span id="taxtotal">{{ object.taxtotal }}</span></td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right">Total:<span id="total" >{{ object.total }}</span></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right"><a href="{% url "checkout" %}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary"></a></span></td>
+        </tr>
+</table>
+{% endif %}
+
+</div>
+{% endblock %}

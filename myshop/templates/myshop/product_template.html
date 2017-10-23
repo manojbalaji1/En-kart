@@ -1,0 +1,18 @@
+<div class="thumbnail">
+    <div class="caption">
+            <h4 align="center"><a href="{{ product.get_absolute_url }}">{{ product }}</a><br /></h4>
+        </div>
+    {% if product.get_image_url %}
+
+        <div>
+            <a href="{{ product.get_absolute_url }}" ><img class="img-responsive img-rounded" src="{{ product.get_image_url }}"/></a>
+        </div>
+
+    {% endif %}
+    <div align="center" class="caption">
+        {% if price == "True" %}
+            {{ product.variation_set.first.get_html_price }}
+        {% endif %}
+    </div>
+
+</div>

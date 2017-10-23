@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Products <small><a href="{% url "category_list" %}">Categories</a> </small></h1>
+    {% include "products.html" %}
+{% endblock %}

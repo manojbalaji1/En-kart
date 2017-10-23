@@ -1,0 +1,87 @@
+{%  extends "base.html" %}
+
+<script>
+    {% block jquery %}
+        $(".item-qty").change(function () {
+            {#    $(this).next(".btn-update").fadeIn();#}
+            //event.preventDefault()
+            var item = $(this).prev("input[type='hidden']").val();
+            var qty=$(this).val();
+            var data={
+                item:item,
+                qty:qty,
+            };
+
+            console.log(data);
+            $.ajax({
+                type: "GET",
+                url: "{% url 'cart' %}",
+                data: data,
+                success: function (data) {
+                    if (data.deleted){
+                        $("#item-"+item).fadeOut();
+                        $("#subtotal").text(data.subtotal);
+                        $("#taxtotal").text(data.taxtotal);
+                        $("#total").text(data.total);
+                        updateCartItem()
+                    }else{
+                        $("#item-line-total-"+item).text(data.line_total);
+                        $("#subtotal").text(data.subtotal);
+                        $("#taxtotal").text(data.taxtotal);
+                        $("#total").text(data.total);
+                        updateCartItem()
+                    }
+                },
+                error: function(response, error){
+
+{#                    $("#add-form").submit()#}
+                }
+            })
+            updateCartItem()
+        });
+    {% endblock %}
+</script>
+
+
+
+{% block content %}
+
+<div class="container">
+
+{% if object.cartitem_set.count < 1 %}
+    <h1>Your Cart is Empty</h1>
+
+    {% else %}
+    <table class="table">
+    {% for item in object.cartitem_set.all %}
+
+    <tr id="item-{{ item.item.id }}">
+
+        <td>{{ item.item.get_title }}</td>
+        <td><form action="." method="GET">
+            <input type="hidden" name="item" value="{{ item.item.id }}"/>
+            <input class="item-qty" type="number" name="qty" value="{{ item.quantity }}"/>
+            <input type="submit" class="btn-update btn btn-link" value="Update Item" style="display: none;"/></form></td>
+        <td id="item-line-total-{{ item.item.id }}">{{ item.line_item_total }}</td>
+        <td class="text-right" style="text-align: right;"><a href="{{ item.remove }}">X</a> </td>
+
+    </tr>
+    {% endfor %}
+        <tr>
+            <td colspan="4" class="text-right">Subtotal: <span id="subtotal">{{ object.subtotal }}</span></td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right">Tax(Estimated): <span id="taxtotal">{{ object.taxtotal }}</span></td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right">Total:<span id="total" >{{ object.total }}</span></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="text-right"><a href="{% url "checkout" %}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary"></a></span></td>
+        </tr>
+    </table>
+{% endif %}
+</div>
+{% endblock %}

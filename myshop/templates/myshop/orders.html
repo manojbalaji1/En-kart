@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+    <script>
+    function updateCartItem() {
+         var badge = $("#cart-count-badge");
+        $.ajax({
+            type: "GET",
+            url: "{% url 'item_count' %}",
+            success: function (data) {
+                badge.text(0)
+                console.log(data.count)
+            },
+            error: function (response, error) {
+                console.log(response);
+                console.log(error);
+            }
+            })
+
+    }
+    $(document).ready(function () {
+
+       updateCartItem();
+    })
+    </script>
+
+<div class="container">
+
+{% if not user_auth%}
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ login_form }}
+        <input type="hidden" name="next" value="{{ next_url }}"/>
+        <input type="submit" class="btn btn-default"/>
+    </form>
+{% else %}
+<table class="table">
+        <tr>
+        <td></td>
+        <td class="text-left">{{ order.order_date }}</td>
+        <td class="text-right">{{ order.order_status }}</td>
+        <td class="text-right">{{ order.due_amount }}</td>
+        <td class="text-right">{{ order.total_products }}</td>
+        </tr>
+
+</table>
+{% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enkart</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'css/css/font-awesome.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    {% include "javascript.html" %}
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <!--Navbar-->
+    <nav class="navbar navbar-default navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'index' %}">En-Kart</a>
+        </div>
+          <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                  <li><a href="{% url 'index' %}">Home</a></li>
+                  <li><a href="{% url 'category_list' %}">Categories</a></li>
+                  <form class="navbar-form navbar-left" method="GET" role="search" action='{% url "product_list" %}'>
+                      <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Search" name="q" value='{{ request.GET.q }}'>
+                      </div>
+                      <!--  <button type="submit" class="btn btn-default">Submit</button> -->
+                  </form>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a href='{% url 'cart' %}'><i class="fa fa-shopping-cart fa-navbar-cart"></i> <span id="cart-count-badge" class='badge'>{{ request.session.count }}</span></a>
+                  </li>
+                  {% if request.user.is_authenticated %}
+{#                      <li><a href="{% url 'orders' %}">Orders</a></li>#}
+                      <li style="color: white"><a href="#">hello! {{ request.user.username }}</a> </li>
+                      <li><a href="{% url 'logout' %}">Logout</a></li>
+                  {% else %}
+                      <li><a href="{% url 'register' %}">Register</a></li>
+                      {% if not request.user.is_authenticated and not "/accounts/login" in request.get_full_path %}
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login <span class="caret"></span></a>
+                              <ul class="dropdown-menu" role="menu">
+
+                                  <form class='navbar-form' method='POST' action='{% url "login" %}'>{% csrf_token %}
+                                      <div class='form-group'>
+                                          <input type='text' class='form-control' name='username' placeholder='Username' />
+                                      </div>
+                                      <div class='form-group'>
+                                          <input type='password' class='form-control' name='password' placeholder='Password' />
+                                      </div>
+                                      <button type='submit' class='btn btn-default btn-block'>Login</button>
+                                  </form>
+{#                                  <p class='text-center'><a href='{% url "auth_password_reset" %}'>Forgot password</a>?</p>#}
+
+
+                                  <!-- <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li> -->
+                              </ul>
+                          </li>
+                      {% endif %}
+
+                  {% endif %}
+              </ul>
+
+
+
+
+          </div><!--/.nav-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+</head>
+<body>
+<div class="container-fluid">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script>
+    $(document).ready(function () {
+        {% block jquery %}
+        {% endblock %}
+    })
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{%  block content %}
+<div class="col-md-8" style="margin-top: 10px;">
+    <div class="jumbotron" >
+        <form method="post" action="" style="margin-left: 10px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-m btn-primary" type="submit" value="OK"/>
+        </form>
+    </div>
+</div>
+{% endblock %}
