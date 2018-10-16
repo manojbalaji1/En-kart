@@ -10,14 +10,14 @@ body {
     font-size: 14px;
     font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
     color: #333;
-    background: #fff;
+    background: #fff !important;
 }
 
 /* LINKS */
 
 a:link, a:visited {
     color: #447e9b;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 a:focus, a:hover {
