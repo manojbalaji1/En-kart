@@ -339,6 +339,12 @@ def payment_gateway_view(request, amount):
     return render(request, template, context)
 
 
+def order_history(request):
+    context = {
+            "order": queryset
+            }
+    return render(request, "myshop/order_history.html", context)
+
 
 def lineo_credit(request):
     model = LinoCredit()
