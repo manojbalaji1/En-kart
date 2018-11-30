@@ -30,14 +30,16 @@
         {% for o in order %}
         <tr>
             <!--<td class="text-left" id="order_id">{{order.invoice_no}}</td>-->
-        <td class="text-left" id="order_data">{{ o.order_date }}</td>
-        <td class="text-right" id="order_status">{{ o.order_status }}</td>
-        <td class="text-right" >{{ o.due_amount }}</td>
+        <td class="text-left" id="order_data">{{ o.name }}</td>
+        <td class="text-right" id="order_status">{{ o.status }}</td>
+        <td class="text-right" >{{ o.amount }}</td>
         <td class="text-right">{{ o.total_products }}</td>
+        <td class="text-right">{{ o.total_products }}</td>
+        <td class="text-right" href="http://localhost:8000/myshop/cancel/{{o.due_amount}}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary" id="checkout"></a></tr>td>
         </tr>
 
         <tr>
-                <td colspan="4" class="text-right"><a href="http://localhost:8000/myshop/payment_gateway/{{o.due_amount}}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary" id="checkout"></a></span></td>
+                <td colspan="4" class="text-right"><a href="http://localhost:8000/myshop/payment_gateway/{{o.due_amount}}"></a></span></td>
         </tr>
     {% endfor %}
 </table>
