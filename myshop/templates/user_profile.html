@@ -101,6 +101,18 @@ body {
   color: #5b9bd1;
 }
 
+.span-used-amount {
+	margin-left: 5em;
+}
+
+.span-used-balance {
+	margin-left: 4em;
+}
+
+.span-used-loan {
+	margin-left: 1em;
+}
+
 .profile-usermenu ul li.active {
   border-bottom: none;
 }
@@ -165,13 +177,13 @@ Licensed under MIT
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li class="active">
-							<p> <i class="glyphicon glyphicon-home"></i> Loan Amount {{credit}} </p>
+							<p> <i class="glyphicon glyphicon-home"></i> Loan Amount <span class="span-used-loan">{{credit}}</span> </p>
 						</li>
 						<li class="active">
-							<p> <i class="glyphicon glyphicon-user"></i> Used {{used}}</p> 
+							<p> <i class="glyphicon glyphicon-user"></i> Used <span class="span-used-amount">{{used}}</span></p> 
 						</li >
 						<li class="active">
-							<p> <i class="glyphicon glyphicon-ok"></i> Balance {{balance}} </p> 
+							<p> <i class="glyphicon glyphicon-ok"></i> Balance <span class="span-used-balance">{{balance}}</span> </p> 
 						</li>
 						<li class="active">
 							<a href="#">
