@@ -295,3 +295,9 @@ class ProductFeature(models.Model):
     def __unicode__(self):
         return self.product.product_name
 
+
+class LinoCredit(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+    credit = models.FloatField(max_length=20)
+    used = models.FloatField(max_length=20)

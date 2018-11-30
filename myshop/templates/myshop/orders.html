@@ -5,26 +5,23 @@
 
 
     <script>
-    function updateCartItem() {
-         var badge = $("#cart-count-badge");
-        $.ajax({
-            type: "GET",
-            url: "{% url 'item_count' %}",
-            success: function (data) {
-                badge.text(0)
-                console.log(data.count)
-            },
-            error: function (response, error) {
-                console.log(response);
-                console.log(error);
-            }
-            })
+    <!--$('#checkout').click(function() {-->
+         <!--data = {-->
+            <!--"amount":"{{-->
+         <!--}-->
+         <!--$.ajax({-->
+                <!--type: "GET",-->
+                <!--url: "",-->
+                <!--data: data,-->
+                <!--success: function (data) {-->
+                    <!--console.log("test");-->
+                <!--},-->
+                <!--error: function(response, error){-->
 
-    }
-    $(document).ready(function () {
-
-       updateCartItem();
-    })
+<!--{#                    $("#add-form").submit()#}-->
+                <!--}-->
+            <!--})-->
+    <!--});-->
     </script>
 
 <div class="container">
@@ -38,14 +35,19 @@
     </form>
 {% else %}
 <table class="table">
+        {% for o in order %}
         <tr>
-        <td></td>
-        <td class="text-left">{{ order.order_date }}</td>
-        <td class="text-right">{{ order.order_status }}</td>
-        <td class="text-right">{{ order.due_amount }}</td>
-        <td class="text-right">{{ order.total_products }}</td>
+            <!--<td class="text-left" id="order_id">{{order.invoice_no}}</td>-->
+        <td class="text-left" id="order_data">{{ o.order_date }}</td>
+        <td class="text-right" id="order_status">{{ o.order_status }}</td>
+        <td class="text-right" >{{ o.due_amount }}</td>
+        <td class="text-right">{{ o.total_products }}</td>
         </tr>
 
+        <tr>
+                <td colspan="4" class="text-right"><a href="http://localhost:8000/myshop/payment_gateway/{{o.due_amount}}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary" id="checkout"></a></span></td>
+        </tr>
+    {% endfor %}
 </table>
 {% endif %}
 

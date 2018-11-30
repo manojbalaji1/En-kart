@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .models import Product, Payment, Customer, Cart, CartItem, Category, Brand, Order, OrderDetails, Variation, ProductImage, ProductFeature
+from .models import Product, Payment, Customer, Cart, CartItem, Category, Brand, Order, OrderDetails, Variation, ProductImage, ProductFeature, LinoCredit
 from django.contrib import admin
 
 class CartItemInLine(admin.TabularInline):
@@ -28,4 +28,5 @@ admin.site.register(OrderDetails)
 admin.site.register(Variation)
 admin.site.register(ProductImage)
 admin.site.register(ProductFeature)
+admin.site.register(LinoCredit)
 

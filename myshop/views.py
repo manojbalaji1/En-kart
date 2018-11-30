@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse
-from . models import Product, Category, ProductFeature, Variation, CartItem, Cart, Order
+from . models import Product, Category, ProductFeature, Variation, CartItem, Cart, Order, LinoCredit
 from .forms import UserResgisterForm
 from django.contrib.auth import (
     authenticate,
@@ -125,9 +125,6 @@ class CategoryDetailView(DetailView):
         products = (products | default_product).distinct()
         context["products"] = products
         return context
-
-
-
 
 
 # Product detailed view
@@ -298,7 +295,7 @@ class OrderView(ListView):
         cart = Cart.objects.get( cart_id=cart_id )
         order = Order()
         if order.cart == cart_id:
-            return order
+            return [order]
         try:
             print order.customer_id
             order.customer_id = user.id
@@ -308,9 +305,9 @@ class OrderView(ListView):
             order.cart = cart_id
             order.save()
         except:
-            return order
+            return [order]
 
-        return order
+        return [order]
 
     def get_context_data(self, *args, **kwargs):
         context = super(OrderView, self).get_context_data(*args, **kwargs)
@@ -322,3 +319,30 @@ class OrderView(ListView):
             context["next_url"] = self.request.build_absolute_uri()
 
         return context
+
+
+def payment_gateway_view(request, amount):
+    template = "payment_gateway.html"
+    print(amount)
+    return render(request, template)
+
+
+def lineo_credit(request):
+    model = LinoCredit()
+    queryset = LinoCredit.objects.all()
+    context = {}
+    if request.method == 'GET':
+        for obj in queryset:
+            balance = obj.credit - obj.used
+            context = {
+                "credit": obj.credit,
+                "used": obj.used,
+                "balance": balance
+            }
+            break
+    else:
+        model.save()
+    return render(request, "user_profile.html", context)
+
+def payment(request):
+    return
