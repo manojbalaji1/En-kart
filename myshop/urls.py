@@ -16,6 +16,7 @@ urlpatterns =[
 url(r'^cart/count$', ItemCountView.as_view(), name="item_count"),
 url(r'^checkout/$', CheckoutView.as_view(), name="checkout"),
 url(r'^order/$', OrderView.as_view(), name="order"),
+url(r'^order_history/$', views.order_history, name="order_history"),
 url(r'^payment_gateway/(?P<amount>[0-9]*\.[0-9]*)$', views.payment_gateway_view, name="payment_gateway"),
 url(r'^lineocredit/$', views.lineo_credit, name='lieno_credit'),
     # url(r'^payment_gateway_redirect/$', views.payment_gateway_redirect, name="payment_gateway_redirect")

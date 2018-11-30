@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+    <script>
+    <!--$('#checkout').click(function() {-->
+         <!--data = {-->
+            <!--"amount":"{{-->
+         <!--}-->
+         <!--$.ajax({-->
+                <!--type: "GET",-->
+                <!--url: "",-->
+                <!--data: data,-->
+                <!--success: function (data) {-->
+                    <!--console.log("test");-->
+                <!--},-->
+                <!--error: function(response, error){-->
+
+<!--{#                    $("#add-form").submit()#}-->
+                <!--}-->
+            <!--})-->
+    <!--});-->
+    </script>
+
+<div class="container">
+    <span> <h3> Order history </h3></span>
+<table class="table">
+        {% for o in order %}
+        <tr>
+            <!--<td class="text-left" id="order_id">{{order.invoice_no}}</td>-->
+        <td class="text-left" id="order_data">{{ o.order_date }}</td>
+        <td class="text-right" id="order_status">{{ o.order_status }}</td>
+        <td class="text-right" >{{ o.due_amount }}</td>
+        <td class="text-right">{{ o.total_products }}</td>
+        </tr>
+
+        <tr>
+                <td colspan="4" class="text-right"><a href="http://localhost:8000/myshop/payment_gateway/{{o.due_amount}}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary" id="checkout"></a></span></td>
+        </tr>
+    {% endfor %}
+</table>
+
+</div>
+{% endblock %}
