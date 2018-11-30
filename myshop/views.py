@@ -323,8 +323,20 @@ class OrderView(ListView):
 
 def payment_gateway_view(request, amount):
     template = "payment_gateway.html"
-    print(amount)
-    return render(request, template)
+    amount = round(float(amount),2)
+    interest = 0.02
+    commission = round(interest * float(amount), 2)
+    if commission < 10:
+        commission = 10
+
+    ecr = amount - commission
+    context = {
+        "amount": amount,
+        "commission": commission,
+        "ecr": ecr,
+
+    }
+    return render(request, template, context)
 
 
 def lineo_credit(request):
@@ -343,6 +355,7 @@ def lineo_credit(request):
     else:
         model.save()
     return render(request, "user_profile.html", context)
+
 
 def payment(request):
     return
