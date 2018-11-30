@@ -158,7 +158,7 @@ class ProductListView(ListView):
 
     def get_context_data(self,*args, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
-        print context
+        print (context)
         context["now"] = timezone.now()
         return context
 
@@ -297,7 +297,7 @@ class OrderView(ListView):
         if order.cart == cart_id:
             return [order]
         try:
-            print order.customer_id
+            print (order.customer_id)
             order.customer_id = user.id
             order.due_amount = cart.total
             order.total_products = cart.cartitem_set.all().count()
@@ -338,12 +338,6 @@ def payment_gateway_view(request, amount):
     }
     return render(request, template, context)
 
-
-def order_history(request):
-    context = {
-            "order": queryset
-            }
-    return render(request, "myshop/order_history.html", context)
 
 
 def lineo_credit(request):
