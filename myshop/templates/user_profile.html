@@ -29,8 +29,8 @@ body {
 .profile-userpic img {
   float: none;
   margin: 0 auto;
-  width: 50%;
-  height: 50%;
+  width: 5em;
+  height: 5em;
   -webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   border-radius: 50% !important;
@@ -136,7 +136,7 @@ Licensed under MIT
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="img-responsive" alt="">
+					<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="img-responsive img_dim" alt="">
 				</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
@@ -165,19 +165,13 @@ Licensed under MIT
 				<div class="profile-usermenu">
 					<ul class="nav">
 						<li class="active">
-							<a href="#">
-							<i class="glyphicon glyphicon-home"></i>
-							Loan Amount </a>{{credit}}
+							<p> <i class="glyphicon glyphicon-home"></i> Loan Amount {{credit}} </p>
 						</li>
 						<li class="active">
-							<a href="#">
-							<i class="glyphicon glyphicon-user"></i>
-							Used </a> {{used}}
+							<p> <i class="glyphicon glyphicon-user"></i> Used {{used}}</p> 
 						</li >
 						<li class="active">
-							<a href="#" target="_blank">
-							<i class="glyphicon glyphicon-ok"></i>
-							Balance </a> {{balance}}
+							<p> <i class="glyphicon glyphicon-ok"></i> Balance {{balance}} </p> 
 						</li>
 						<li class="active">
 							<a href="#">
