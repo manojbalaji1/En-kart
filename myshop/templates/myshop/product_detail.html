@@ -68,7 +68,7 @@
             {% if object.get_image_url %}
                 <div>
 
-                    <img src="{{ object.get_image_url }}" class="img-rounded img-responsive">
+                    <img src="{{ object.get_image_url }}" class="img-rounded img-responsive" style="max-height:600px;max-width:600px;overflow:auto;">
 
                 </div>
             {% endif %}

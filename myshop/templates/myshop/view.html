@@ -21,13 +21,13 @@
                     if (data.deleted){
                         $("#item-"+item).fadeOut();
                         $("#subtotal").text(data.subtotal);
-                        $("#taxtotal").text(data.taxtotal);
+                        <!--$("#taxtotal").text(data.taxtotal);-->
                         $("#total").text(data.total);
                         updateCartItem()
                     }else{
                         $("#item-line-total-"+item).text(data.line_total);
                         $("#subtotal").text(data.subtotal);
-                        $("#taxtotal").text(data.taxtotal);
+                        <!--$("#taxtotal").text(data.taxtotal);-->
                         $("#total").text(data.total);
                         updateCartItem()
                     }
@@ -67,14 +67,14 @@
 
     </tr>
     {% endfor %}
-        <tr>
-            <td colspan="4" class="text-right">Subtotal: <span id="subtotal">{{ object.subtotal }}</span></td>
+        <!--<tr>-->
+            <!--<td colspan="4" class="text-right">Subtotal: <span id="subtotal">{{ object.subtotal }}</span></td>-->
 
-        </tr>
-        <tr>
-            <td colspan="4" class="text-right">Tax(Estimated): <span id="taxtotal">{{ object.taxtotal }}</span></td>
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td colspan="4" class="text-right">Tax(Estimated): <span id="taxtotal">{{ object.taxtotal }}</span></td>-->
 
-        </tr>
+        <!--</tr>-->
         <tr>
             <td colspan="4" class="text-right">Total:<span id="total" >{{ object.total }}</span></td>
         </tr>
