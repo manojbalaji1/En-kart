@@ -195,7 +195,7 @@ class CartView(SingleObjectMixin, View):
         cart_id = self.request.session.get( "cart_id" )
         if cart_id is None:
             cart = Cart()
-            cart.tax_percentage=0.085
+            cart.tax_percentage=0.0
             cart.save()
             cart_id = cart.cart_id
             self.request.session["cart_id"] = cart_id
@@ -235,11 +235,11 @@ class CartView(SingleObjectMixin, View):
             except:
                 total=None
             try:
-                subtotal = cart_item.cart.subtotal
+                subtotal = 0.0
             except:
                 subtotal = None
             try:
-                taxtotal = cart_item.cart.taxtotal
+                taxtotal = 0.0
             except:
                 taxtotal = None
             try:
@@ -339,6 +339,13 @@ def payment_gateway_view(request, amount):
     return render(request, template, context)
 
 
+def order_history(request):
+    context = {
+            "order": queryset
+            }
+    return render(request, "myshop/order_history.html", context)
+
+
 def lineo_credit(request):
     model = LinoCredit()
     queryset = LinoCredit.objects.all()
@@ -358,4 +365,5 @@ def lineo_credit(request):
 
 
 def payment(request):
-    return
+    credit = LinoCredit.objects.get(id=1)
+    return HttpResponseRedirect
