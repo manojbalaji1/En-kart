@@ -392,7 +392,7 @@ svg.svg-Line-o-Credit {
 
   <div class='payments'>
 
-    <div class='button'>
+    <div class='button' id="cash">
       Cash
 
       <svg class="svg-cash" viewBox="0 0 512 512">
@@ -408,7 +408,7 @@ svg.svg-Line-o-Credit {
         <path class="svg-cash-shirt-outer" d="M7,122v165.564c16,8.649,63,10.37,63,10.37V121.644c0,0-45,0.484-63,0" />
       </svg>
     </div>
-    <div class='button'>
+    <div class='button ' id="debit">
       Debit
 
       <svg class="svg-debit" viewBox="0 0 32 23">
@@ -418,7 +418,7 @@ svg.svg-Line-o-Credit {
         <path class="svg-debit-read" d="M-.007 3h32v3h-32v-3z" />
       </svg>
     </div>
-    <div class='button'>
+    <div class='button active' id="credit_card">
       Credit Card
 
       <svg class="svg-visa" viewBox="0 0 512 512">
@@ -460,7 +460,7 @@ svg.svg-Line-o-Credit {
         <path class="svg-amex-letter" d="M450.984,329.018h-23.495v-11.973h20.507c0,0,7.477,0.88,7.477-4.123 c0-4.679-11.169-4.316-11.169-4.316s-18.218,1.586-18.218-15.484c0-16.984,16.449-16.016,16.449-16.016h25.262v12.14h-20.334 c0,0-7.038-1.412-7.038,3.705c0,4.296,9.597,3.685,9.597,3.685s20.144-1.488,20.144,14.168 c0,16.793-12.983,18.282-17.584,18.282C451.586,329.084,450.984,329.018,450.984,329.018" />
       </svg>
     </div>
-    <div class='button active'>
+    <div class='button loc' id="loc">
       Line-o-Credit
 
       <svg class="svg-Line-o-Credit" viewBox="0 0 512 512">
@@ -472,7 +472,7 @@ svg.svg-Line-o-Credit {
 
       </svg>
     </div>
-    <div class='button'>
+    <div class='button' id="paypal">
       PayPal
 
       <svg class="svg-paypal" viewBox="0 0 512 512">
@@ -486,18 +486,18 @@ svg.svg-Line-o-Credit {
       </svg>
     </div>
 
-  <div class="form-group" align="center">
+</div>
+<div class="form-group" align="center">
           <div class="col-md-12">
             <br>
     <br>
     <br>
-              <button type="button" class="btn btn-primary">Pay</button>
+              <button type="button" class="btn btn-primary" id="pay">Pay</button>
           </div>
         </div>
   </div>
-
-</div>
-<div class="container">
+<div class="container" id="message">
+    <h1>Payment Completed Successfully! Thank You!</h1>
     <h3 class="h3" align="center"> Transaction data references </h3>
     <div class="row">
         <div class="col-md-3 col-sm-6">
@@ -505,7 +505,7 @@ svg.svg-Line-o-Credit {
 
                 <div class="product-content">
                     <h3 class="title"><a href="#">Order Value</a></h3>
-                    <div class="price">{{amount}} rupees</div>
+                    <div class="price" id="amount" value="{{amount}}">{{amount}} rupees</div>
                 </div>
             </div>
         </div>
@@ -513,7 +513,7 @@ svg.svg-Line-o-Credit {
             <div class="product-grid9">
                 <div class="product-content">
                     <h3 class="title"><a href="#">Commission</a></h3>
-                    <div class="price">{{commission}} rupees</div>
+                    <div class="price" id="commission">{{commission}} rupees</div>
                 </div>
             </div>
         </div>
@@ -521,26 +521,45 @@ svg.svg-Line-o-Credit {
             <div class="product-grid9">
                 <div class="product-content">
                     <h3 class="title"><a href="#">ECR</a></h3>
-                    <div class="price">{{ecr}}</div>
+                    <div class="price" id="ecr">{{ecr}}</div>
                 </div>
             </div>
         </div>
-        <!--<div class="col-md-3 col-sm-6">-->
-            <!--<div class="product-grid9">-->
-                <!--<div class="product-content">-->
-                    <!--<h3 class="title"><a href="#">RR</a></h3>-->
-                    <!--<div class="price"> {{ecr}} rupees</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid9">
+                <div class="product-content">
+                    <h3 class="title"><a href="#">Saved</a></h3>
+                    <div class="price" id="saved"> {{commission}} rupees</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
-    $('.button').click(function(){
+    $(document).ready(function(){
+    $('#message').hide();
+    $('#saved').hide();
+    $('.button').on('click', function(){
         $('.button').removeClass("active") ;
         $(this).addClass("active") ;
+        console.log("ts") ;
+        console.log($(this).attr('id'));
+        if($(this).attr('id') =='loc'){
+            $('#saved').show();
+            $('#commission').text(0);
+            $('#ecr').text($('#amount').attr('value') + ' rupees');
+        }
+        else{
+            $('#commission').text({{commission}});
+            $('#ecr').text({{amount}}-{{commission}} + ' rupees')
+        }
     });
-
+    $('#pay').on('click', function(){
+        $('#message').show();
+        $('.payments').hide();
+        $(this).hide();
+    });
+  });
 </script>
 </script>
 {% endblock %}
