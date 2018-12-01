@@ -340,18 +340,24 @@ def payment_gateway_view(request, amount):
 
 
 def order_history(request):
-    queryset = [{"name":"OFFICE Chair - Default", "amount":"400.00"},
-                {"name":"Trimmer - Default", "amount":"700.00"},
-                {"name":"Book - FICTION - Default", "amount":"250.00"},
-                {"name":"Shampoo - Default", "amount":"350.00"},
-                {"name":"Smart Phone 6 64GB FGSM 4G LTE - Default", "amount":"40000.00"},
-                {"name":"Shirt - Formal Officewear - Default", "amount":"800.00"},
-                {"name":"Acer Aspire Laptop - Default", "amount":"30000.00"},
-                {"name":"Treadmill - Default", "amount":"12000.00"},
-                {"name":"Wall Painting - Default", "amount":"7000.00"},
-                {"name":"Food Processor - Default", "amount":"8500.00"}]
+    queryset = [{"name":"OFFICE-Chair-Default", "amount":"400.00"},
+                {"name":"Trimmer-Default", "amount":"700.00"},
+                {"name":"Book-FICTION-Default", "amount":"250.00"},
+                {"name":"Shampoo-Default", "amount":"350.00"},
+                {"name":"Smart-Phone-6-64GB-FGSM-4G-LTE-Default", "amount":"40000.00"},
+                {"name":"Shirt-Formal-Officewear-Default", "amount":"800.00"},
+                {"name":"Acer-Aspire-Laptop-Default", "amount":"30000.00"},
+                {"name":"Treadmill-Default", "amount":"12000.00"},
+                {"name":"Wall-Painting-Default", "amount":"7000.00"},
+                {"name":"Food-Processor-Default", "amount":"8500.00"}]
+    amount = 100000
+    comission = 2000
+    ecr = amount-comission
     context = {
-            "order": queryset
+            "order": queryset,
+            "amount": amount,
+            "commission": comission,
+            "ecr": ecr
             }
     return render(request, "myshop/order_history.html", context)
 

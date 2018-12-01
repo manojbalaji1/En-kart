@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import views
+from . import views
 from .views import CategoryListView, CategoryDetailView
 urlpatterns =[
     url(r'^/$', CategoryListView.as_view(), name='category_list'),

@@ -33,7 +33,7 @@
         <td class="text-left" id="order_data">{{ o.name }}</td>
         <td class="text-right" id="order_status">Pending</td>
         <td class="text-right" >{{ o.amount }}</td>
-        <td class="text-right" href="http://localhost:8000/myshop/cancel/{{o.amount}}"><input type="button" name="Checkout" value="checkout" class="btn btn-primary" id="checkout"></a></td>
+        <td class="text-right" ><button name="Cancel" value="{{o.amount}}" class="btn btn-primary" id="{{o.name}}">Cancel</button></td>
         </tr>
 
         <tr>
@@ -42,5 +42,65 @@
     {% endfor %}
 </table>
 
+<div class="container" id="message" style="padding-bottom:5em">
+    <h1>Payment Completed Successfully! Thank You!</h1>
+    <h3 class="h3" align="center"> Transaction data references </h3>
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid9">
+
+                <div class="product-content">
+                    <h3 class="title"><a href="#">Order Value</a></h3>
+                    <div class="price" id="amount" value="{{amount}}">{{amount}} rupees</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid9">
+                <div class="product-content">
+                    <h3 class="title"><a href="#">Commission</a></h3>
+                    <div class="price" id="commission" value="{{commission}}>{{commission}} rupees</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid9">
+                <div class="product-content">
+                    <h3 class="title"><a href="#">ECR</a></h3>
+                    <div class="price" id="ecr" value="{{ecr}}">{{ecr}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid9">
+                <div class="product-content">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        {% for o in order %}
+        console.log("{{o.name}}") ;
+            $("#{{o.name}}").one("click",function(){
+                total_amount = $("#amount").attr("value") ;
+                item_amount = $(this).attr("value") ;
+                total_amount -= item_amount
+                $("#amount").attr("value", total_amount) ;
+                $("#amount").text(total_amount+" rupees" ) ;
+                ecr = $("#ecr").attr("value");
+                ecr = total_amount - 2000;
+                $("#ecr").attr("value", ecr)
+                $("#ecr").text(ecr + " rupees")
+                console.log(total_amount)
+                
+            });
+        {% endfor %}
+    }) ;
+</script>
 {% endblock %}
